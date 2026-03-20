@@ -4,6 +4,16 @@ A lightweight desktop utility that prevents your computer from going to sleep by
 
 Built with Tauri v2 + Rust + React.
 
+## Install
+
+[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/aurora-awake)
+
+```bash
+sudo snap install aurora-awake
+```
+
+Or download the latest `.AppImage`, `.deb`, or `.rpm` from [GitHub Releases](https://github.com/daniacosta-dev/aurora-awake/releases).
+
 ## Features
 
 - Multiple movement patterns: Line, Square, Circle, ZigZag

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Aurora Awake
+Comment=Keep your desktop active
+Exec=aurora-awake %U
+Icon=${SNAP}/meta/gui/icon.png
+Type=Application
+Categories=Utility;
+StartupWMClass=aurora-awake

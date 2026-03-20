@@ -9,6 +9,7 @@ description: |
 
 grade: stable
 confinement: strict
+icon: src-tauri/icons/128x128.png
 
 apps:
   aurora-awake:
@@ -22,6 +23,13 @@ parts:
   aurora-awake:
     plugin: nil
     source: .
+    override-pull: |
+      apt-get install -y rsync
+      rsync -a \
+        --exclude='src-tauri/target/' \
+        --exclude='node_modules/' \
+        --exclude='snap/' \
+        "${CRAFT_PROJECT_DIR}/" "${CRAFT_PART_SRC}/"
     build-snaps:
       - node/22/stable
       - rustup/latest/stable
@@ -35,9 +43,11 @@ parts:
     override-build: |
       rustup default stable
       npm ci
-      npm run tauri build
+      npm run tauri build -- --bundles deb
       install -Dm755 src-tauri/target/release/aurora-awake \
         ${CRAFT_PART_INSTALL}/bin/aurora-awake
+      install -Dm644 src-tauri/icons/128x128.png \
+        ${CRAFT_PART_INSTALL}/meta/gui/icon.png
     stage-packages:
       - libwebkit2gtk-4.1-0
       - libayatana-appindicator3-1

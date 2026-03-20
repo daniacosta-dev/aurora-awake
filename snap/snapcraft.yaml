@@ -1,0 +1,43 @@
+name: aurora-awake
+base: core24
+version: '0.1.0'
+summary: Keep your desktop active
+description: |
+  Aurora Awake prevents your computer from going to sleep by moving
+  the mouse cursor at regular intervals. Supports multiple movement
+  patterns: line, square, circle, and zigzag.
+
+grade: stable
+confinement: strict
+
+apps:
+  aurora-awake:
+    command: bin/aurora-awake
+    extensions: [gnome]
+    plugs:
+      - x11
+      - opengl
+
+parts:
+  aurora-awake:
+    plugin: nil
+    source: .
+    build-snaps:
+      - node/22/stable
+      - rustup/latest/stable
+    build-packages:
+      - libwebkit2gtk-4.1-dev
+      - libssl-dev
+      - libayatana-appindicator3-dev
+      - librsvg2-dev
+      - pkg-config
+      - build-essential
+    override-build: |
+      rustup default stable
+      npm ci
+      npm run tauri build
+      install -Dm755 src-tauri/target/release/aurora-awake \
+        ${CRAFT_PART_INSTALL}/bin/aurora-awake
+    stage-packages:
+      - libwebkit2gtk-4.1-0
+      - libayatana-appindicator3-1
